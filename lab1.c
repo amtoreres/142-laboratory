@@ -2,8 +2,7 @@
 #include <stdlib.h>
 
 int primeChecker(int);
-void mergeSort(int *arr, int len);
-void mergeRecursion(int *arr, int left, int right);
+void mergeSort(int *arr, int left, int right);
 void mergeSubarrays(int *arr, int left, int mid, int right);
 int linearSearch(int *arr, int num, int length);
 void showSortedArray(int *arr, int length);
@@ -44,7 +43,7 @@ int main()
         return 0;
     }
 
-    mergeSort(arr, ctr);
+    mergeSort(arr, 0, ctr-1);
 
     printf("\nThe array of prime numbers has been sorted. \nDo you want to search for a prime number? (1-yes | 0-no): ");
     scanf("%d", &num);
@@ -82,15 +81,12 @@ int primeChecker(int num){
     }
 }
 
-void mergeSort(int *arr, int len){
-    mergeRecursion(arr, 0, len-1);
-}
 
-void mergeRecursion(int *arr, int left, int right){
+void mergeSort(int *arr, int left, int right){
     if(left < right){
         int mid = (left+right) / 2;
-        mergeRecursion(arr, left, mid);             //divides the left subarray
-        mergeRecursion(arr, mid+1, right);          //divides the right subarray
+        mergeSort(arr, left, mid);             //divides the left subarray
+        mergeSort(arr, mid+1, right);          //divides the right subarray
         mergeSubarrays(arr, left, mid, right);
     }
 }
@@ -104,15 +100,15 @@ void mergeSubarrays(int *arr, int left, int mid, int right){
 
     //checks if either the left or right subarray is already transfered to tempArr
     while(i<=mid && j<=right){
-        if(arr[i] <= arr[j]){
-            tempArr[k] = arr[i];
-            i++;
-            k++;
+        if(arr[i] <= arr[j]){       //compares the elements of left and right subarrays
+            tempArr[k] = arr[i];   
+            i++;                    //move to next element in left subarray
+            k++;                    //move to next slot in tempArr
         }
         else{
-            tempArr[k] = arr[j];
-            j++;
-            k++;
+            tempArr[k] = arr[j];    
+            j++;                    //move to next element in right subarray
+            k++;                    
         }
     }
 
